@@ -26,8 +26,63 @@ function modelLoaded()
 
 function speak()
 {
-    var synth = window.speechSynthesis
-    speak_data_1 = "The prediction is " + prediction_1;
-    var utterThis = new SpeechSynthesisUtterance(speak_data_1);
-    synth.speak(utterThis);
+var synth = window.speechSynthesis;
+var utterThis = new SpeechSynthesisUtterance(speak_data);
+synth.speak(utterThis);
+speak_data="";
+}
+
+
+function check()
+{
+  img = document.getElementById('captured_image');
+  classifier.classify(img, gotResult);
+}
+
+function gotResult(error, results) 
+{
+if (error) 
+{
+  console.error(error);
+} 
+else 
+{
+  console.log(results);
+  
+  document.getElementById("result_object_name").innerHTML = results[0].label;
+
+  gesture = results[0].label;
+
+ 
+  
+  if(gesture == "Amazing")
+  {
+    document.getElementById("result_object_gesture_icon").innerHTML = "&#128076;";
+    speak_data = "This is looking amazing";
+    speak();
+   
+  }
+
+
+
+  else if(gesture == "All the best")
+  {
+    
+    document.getElementById("result_object_gesture_icon").innerHTML = "&#128077;";
+    speak_data = "All the best";
+    speak();
+  }
+
+
+
+  else if(gesture == "Victory")
+  {
+    
+    document.getElementById("result_object_gesture_icon").innerHTML = "&#9996;";
+    speak_data = "That was the marvelous victory";
+    speak();
+  }
+
+  
+}
 }
